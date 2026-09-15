@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Library Management - Issue & Return</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="css/style.css">
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- =====================================
+         SIDEBAR
+    ====================================== -->
+
+    <aside class="sidebar">
+
+        <h2>📚 Library</h2>
+
+        <ul>
+
+            <li>
+                <a href="index.html">
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="books.html">
+                    Books
+                </a>
+            </li>
+
+            <li>
+                <a href="members.html">
+                    Members
+                </a>
+            </li>
+
+            <li>
+                <a href="issue.html">
+                    Issue / Return
+                </a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+
+
+    <!-- =====================================
+         MAIN CONTENT
+    ====================================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOP BAR -->
+
+        <div class="topbar">
+
+            <h1>
+                Issue & Return Books
+            </h1>
+
+            <span>
+                Library Management System
+            </span>
+
+        </div>
+
+
+
+        <!-- =====================================
+             ISSUE BOOK FORM
+        ====================================== -->
+
+        <div class="form-container">
+
+            <h2>
+                Issue a Book
+            </h2>
+
+
+            <!-- SELECT MEMBER -->
+
+            <div class="form-group">
+
+                <label for="memberId">
+                    Select Member
+                </label>
+
+                <select id="memberId">
+
+                    <option value="">
+                        Select Member
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- SELECT BOOK -->
+
+            <div class="form-group">
+
+                <label for="bookId">
+                    Select Available Book
+                </label>
+
+                <select id="bookId">
+
+                    <option value="">
+                        Select Book
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- DUE DATE -->
+
+            <div class="form-group">
+
+                <label for="dueDate">
+                    Due Date
+                </label>
+
+                <input
+                    type="date"
+                    id="dueDate"
+                >
+
+            </div>
+
+
+
+            <!-- ISSUE BUTTON -->
+
+            <button
+                class="btn-primary"
+                onclick="issueBook()">
+
+                Issue Book
+
+            </button>
+
+
+            <!-- CLEAR BUTTON -->
+
+            <button
+                class="btn-warning"
+                onclick="clearIssueForm()">
+
+                Clear
+
+            </button>
+
+        </div>
+
+
+
+        <!-- =====================================
+             ISSUE HISTORY
+        ====================================== -->
+
+        <div class="section">
+
+            <h2>
+                Issue History
+            </h2>
+
+
+            <br>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Issue ID
+                            </th>
+
+                            <th>
+                                Book ID
+                            </th>
+
+                            <th>
+                                Member ID
+                            </th>
+
+                            <th>
+                                Issue Date
+                            </th>
+
+                            <th>
+                                Due Date
+                            </th>
+
+                            <th>
+                                Return Date
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Fine
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="issueTableBody">
+
+                        <!-- Issue records
+                             will appear here -->
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+    </main>
+
+</div>
+
+
+
+<!-- =====================================
+     JAVASCRIPT
+====================================== -->
+
+<script src="js/issue.js"></script>
+
+
+</body>
+
+</html>

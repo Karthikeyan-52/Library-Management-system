@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Library Management System</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="css/style.css">
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- =====================================
+         SIDEBAR
+    ====================================== -->
+
+    <aside class="sidebar">
+
+        <h2>📚 Library</h2>
+
+        <ul>
+
+            <li>
+                <a href="index.html">
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="books.html">
+                    Books
+                </a>
+            </li>
+
+            <li>
+                <a href="members.html">
+                    Members
+                </a>
+            </li>
+
+            <li>
+                <a href="issue.html">
+                    Issue / Return
+                </a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+
+
+    <!-- =====================================
+         MAIN CONTENT
+    ====================================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOP BAR -->
+
+        <div class="topbar">
+
+            <h1>
+                Dashboard
+            </h1>
+
+            <span>
+                Library Management System
+            </span>
+
+        </div>
+
+
+
+        <!-- =====================================
+             WELCOME MESSAGE
+        ====================================== -->
+
+        <div class="section">
+
+            <h2>
+                Welcome to Library Management System 
+            </h2>
+
+            <p>
+                Manage books, members, book issuing,
+                returns and fines from one place.
+            </p>
+
+        </div>
+
+
+        <br>
+
+
+
+        <!-- =====================================
+             DASHBOARD CARDS
+        ====================================== -->
+
+        <div class="dashboard-cards">
+
+
+            <!-- TOTAL BOOKS -->
+
+            <div class="card">
+
+                <h3>
+                    Total Books
+                </h3>
+
+                <p id="totalBooks">
+                    0
+                </p>
+
+            </div>
+
+
+
+            <!-- AVAILABLE BOOKS -->
+
+            <div class="card">
+
+                <h3>
+                    Available Books
+                </h3>
+
+                <p id="availableBooks">
+                    0
+                </p>
+
+            </div>
+
+
+
+            <!-- ISSUED BOOKS -->
+
+            <div class="card">
+
+                <h3>
+                    Issued Books
+                </h3>
+
+                <p id="issuedBooks">
+                    0
+                </p>
+
+            </div>
+
+
+
+            <!-- MEMBERS -->
+
+            <div class="card">
+
+                <h3>
+                    Registered Members
+                </h3>
+
+                <p id="totalMembers">
+                    0
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================
+             QUICK ACTIONS
+        ====================================== -->
+
+        <div class="section">
+
+            <h2>
+                Quick Actions
+            </h2>
+
+
+            <br>
+
+
+            <a href="books.html">
+
+                <button class="btn-primary">
+
+                     Manage Books
+
+                </button>
+
+            </a>
+
+
+            <a href="members.html">
+
+                <button class="btn-success">
+
+                    Manage Members
+
+                </button>
+
+            </a>
+
+
+            <a href="issue.html">
+
+                <button class="btn-warning">
+
+                    Issue / Return Book
+
+                </button>
+
+            </a>
+
+        </div>
+
+
+        <br>
+
+
+
+        <!-- =====================================
+             RECENT ACTIVITY
+        ====================================== -->
+
+        <div class="section">
+
+            <h2>
+                Library Information
+            </h2>
+
+            <p>
+                Use the sidebar or quick action buttons
+                to manage the library.
+            </p>
+
+        </div>
+
+
+    </main>
+
+</div>
+
+
+
+<!-- =====================================
+     DASHBOARD JAVASCRIPT
+====================================== -->
+
+<script>
+
+    // ==========================================
+    // LOAD DASHBOARD DATA
+    // ==========================================
+
+    function loadDashboard() {
+
+        // Get all books
+
+        fetch("/api/books")
+
+            .then(response => response.json())
+
+            .then(books => {
+
+                let totalBooks = 0;
+
+                let availableBooks = 0;
+
+
+                books.forEach(book => {
+
+                    totalBooks +=
+                        book.quantity;
+
+                    availableBooks +=
+                        book.availableQuantity;
+
+                });
+
+
+                document.getElementById(
+                    "totalBooks"
+                ).textContent =
+                    totalBooks;
+
+
+                document.getElementById(
+                    "availableBooks"
+                ).textContent =
+                    availableBooks;
+
+            })
+
+            .catch(error => {
+
+                console.error(
+                    "Error loading books:",
+                    error
+                );
+
+            });
+
+
+
+        // Get all members
+
+        fetch("/api/members")
+
+            .then(response => response.json())
+
+            .then(members => {
+
+                document.getElementById(
+                    "totalMembers"
+                ).textContent =
+                    members.length;
+
+            })
+
+            .catch(error => {
+
+                console.error(
+                    "Error loading members:",
+                    error
+                );
+
+            });
+
+
+
+        // Get all issued books
+
+        fetch("/api/issues")
+
+            .then(response => response.json())
+
+            .then(issues => {
+
+                let issuedCount = 0;
+
+
+                issues.forEach(issue => {
+
+                    if (
+                        issue.status === "ISSUED"
+                    ) {
+
+                        issuedCount++;
+
+                    }
+
+                });
+
+
+                document.getElementById(
+                    "issuedBooks"
+                ).textContent =
+                    issuedCount;
+
+            })
+
+            .catch(error => {
+
+                console.error(
+                    "Error loading issues:",
+                    error
+                );
+
+            });
+
+    }
+
+
+
+    // ==========================================
+    // LOAD DASHBOARD WHEN PAGE OPENS
+    // ==========================================
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            loadDashboard();
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>
