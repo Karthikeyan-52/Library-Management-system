@@ -1,0 +1,34 @@
+
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: cleanup
+spec:
+  workspaces:
+    - name: source
+  steps:
+    - name: clean-workspace
+      image: alpine:3.20
+      script: |
+        #!/bin/sh
+        echo "Starting workspace cleanup..."
+        find $(workspaces.source.path) -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+        echo "Workspace cleanup completed successfully."
+
+---
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: maven-test
+spec:
+  workspaces:
+    - name: source
+  steps:
+    - name: run-unit-tests
+      image: maven:3.9.9-eclipse-temurin-17
+      workingDir: $(workspaces.source.path)
+      script: |
+        #!/bin/sh
+        echo "Starting Library Management System unit tests..."
+        mvn -B test
+        echo "Unit tests completed successfully."
